@@ -23,11 +23,8 @@
 part of odbc_test;
 
 abstract class TestError {
-
   static void run() {
-
     group("Error", () {
-
       test("sqlGetDiag(Rec/Field)", () {
         var hStmt = new SqlHandle();
         _(sqlAllocHandle(SQL_HANDLE_STMT, _hConn, hStmt));
@@ -36,13 +33,15 @@ abstract class TestError {
         var nativeError = new SqlInt();
         var message = new SqlString(256);
 
-        _(sqlGetDiagRec(SQL_HANDLE_STMT, hStmt, 1, state, nativeError,
-                        message, message.length, null), _nodata);
+        _(
+            sqlGetDiagRec(SQL_HANDLE_STMT, hStmt, 1, state, nativeError,
+                message, message.length, null),
+            _nodata);
 
         sqlFetch(hStmt); //Forced error
 
-        _(sqlGetDiagRec(SQL_HANDLE_STMT, hStmt, 1, state, nativeError,
-                        message, message.length, null));
+        _(sqlGetDiagRec(SQL_HANDLE_STMT, hStmt, 1, state, nativeError, message,
+            message.length, null));
 
         expect(state.value, isNotNull);
         expect(nativeError.value, isNotNull);
@@ -50,13 +49,13 @@ abstract class TestError {
 
         var rowNumber = new SqlInt();
         _(sqlGetDiagField(SQL_HANDLE_STMT, hStmt, 1, SQL_DIAG_ROW_NUMBER,
-                          rowNumber, SQL_IS_INTEGER, null));
+            rowNumber, SQL_IS_INTEGER, null));
 
         expect(rowNumber.value, isNotNull);
 
         var classOrigin = new SqlString(32);
         _(sqlGetDiagField(SQL_HANDLE_STMT, hStmt, 1, SQL_DIAG_CLASS_ORIGIN,
-                          classOrigin, classOrigin.length, null));
+            classOrigin, classOrigin.length, null));
 
         expect(classOrigin.value, isNotNull);
 
@@ -71,13 +70,15 @@ abstract class TestError {
         var nativeError = new SqlInt();
         var message = new SqlString(256);
 
-        _(sqlError(_hEnv, _hConn, hStmt, state, nativeError,
-                   message, message.length, null), _nodata);
+        _(
+            sqlError(_hEnv, _hConn, hStmt, state, nativeError, message,
+                message.length, null),
+            _nodata);
 
         sqlFetch(hStmt); //Forced error
 
-        _(sqlError(_hEnv, _hConn, hStmt, state, nativeError,
-                   message, message.length, null));
+        _(sqlError(_hEnv, _hConn, hStmt, state, nativeError, message,
+            message.length, null));
 
         expect(state.value, isNotNull);
         expect(nativeError.value, isNotNull);
@@ -85,7 +86,6 @@ abstract class TestError {
 
         _(sqlFreeHandle(SQL_HANDLE_STMT, hStmt));
       });
-
     });
   }
 }

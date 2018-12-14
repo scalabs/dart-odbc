@@ -23,12 +23,10 @@
 part of odbc_test;
 
 abstract class TestPrepare {
-
   static void run() {
     var hStmt = new SqlHandle();
 
     group("Prepare", () {
-
       setUp(() {
         _(sqlAllocHandle(SQL_HANDLE_STMT, _hConn, hStmt));
       });
@@ -38,7 +36,8 @@ abstract class TestPrepare {
       });
 
       test("sqlPrepare", () {
-        _(sqlPrepare(hStmt,"SELECT name FROM customers WHERE customer_id = ?", SQL_NTS));
+        _(sqlPrepare(hStmt, "SELECT name FROM customers WHERE customer_id = ?",
+            SQL_NTS));
       });
 
       test("sqlColAttribute", () {
@@ -46,14 +45,14 @@ abstract class TestPrepare {
 
         var string = new SqlString(128);
         var length = new SqlInt();
-        _(sqlColAttribute(hStmt, 1, SQL_DESC_TYPE_NAME, string, string.length,
-                          length, null));
+        _(sqlColAttribute(
+            hStmt, 1, SQL_DESC_TYPE_NAME, string, string.length, length, null));
 
         expect(string.value, isNotNull, reason: "Column type name is null");
 
         var number = new SqlInt();
         _(sqlColAttribute(hStmt, 1, SQL_DESC_CONCISE_TYPE, null, SQL_IS_INTEGER,
-                          length, number));
+            length, number));
 
         expect(number.value, isNotNull, reason: "Column type ordinal is null");
       });
@@ -63,14 +62,14 @@ abstract class TestPrepare {
 
         var string = new SqlString(128);
         var length = new SqlInt();
-        _(sqlColAttributes(hStmt, 1, SQL_DESC_TYPE_NAME, string, string.length,
-                          length, null));
+        _(sqlColAttributes(
+            hStmt, 1, SQL_DESC_TYPE_NAME, string, string.length, length, null));
 
         expect(string.value, isNotNull, reason: "Column type name is null");
 
         var number = new SqlInt();
-        _(sqlColAttributes(hStmt, 1, SQL_DESC_CONCISE_TYPE, null, SQL_IS_INTEGER,
-                           length, number));
+        _(sqlColAttributes(hStmt, 1, SQL_DESC_CONCISE_TYPE, null,
+            SQL_IS_INTEGER, length, number));
 
         expect(number.value, isNotNull, reason: "Column type ordinal is null");
       });
@@ -83,7 +82,6 @@ abstract class TestPrepare {
 
         expect(name.value, equals("C1"));
       });
-
     });
   }
 }

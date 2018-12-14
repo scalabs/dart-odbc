@@ -23,12 +23,10 @@
 part of odbc_test;
 
 abstract class TestExecute {
-
   static void run() {
     var hStmt = new SqlHandle();
 
     group("Execute", () {
-
       setUp(() {
         _(sqlAllocHandle(SQL_HANDLE_STMT, _hConn, hStmt));
       });
@@ -39,36 +37,43 @@ abstract class TestExecute {
 
       test("sqlNativeSql", () {
         var nativeSql = new SqlString(128);
-        _(sqlNativeSql(_hConn,
-                       "SELECT { fn CONVERT(price, SQL_SMALLINT) } FROM parts",
-                       SQL_NTS, nativeSql, nativeSql.length, null));
+        _(sqlNativeSql(
+            _hConn,
+            "SELECT { fn CONVERT(price, SQL_SMALLINT) } FROM parts",
+            SQL_NTS,
+            nativeSql,
+            nativeSql.length,
+            null));
 
         expect(nativeSql.value, isNotNull, reason: "Native SQL is null");
       });
 
       test("sqlExecDirect", () {
-        _(sqlExecDirect(hStmt, "SELECT customer_id, name FROM customers", SQL_NTS));
+        _(sqlExecDirect(
+            hStmt, "SELECT customer_id, name FROM customers", SQL_NTS));
       });
 
       test("sqlExecute", () {
-        _(sqlPrepare(hStmt, "SELECT customer_id, name FROM customers", SQL_NTS));
+        _(sqlPrepare(
+            hStmt, "SELECT customer_id, name FROM customers", SQL_NTS));
 
         _(sqlExecute(hStmt));
       });
 
       test("sqlNumParams", () {
         _(sqlPrepare(hStmt, "SELECT name FROM customers WHERE customer_id = ?",
-                     SQL_NTS));
+            SQL_NTS));
 
         var params = new SqlInt();
         _(sqlNumParams(hStmt, params));
 
-        expect(params.value, equals(1), reason: "Number of parameters is not 1");
+        expect(params.value, equals(1),
+            reason: "Number of parameters is not 1");
       });
 
       test("sqlNumResultCols", () {
         _(sqlPrepare(hStmt, "SELECT name FROM customers WHERE customer_id = ?",
-                     SQL_NTS));
+            SQL_NTS));
 
         var columns = new SqlInt();
         _(sqlNumResultCols(hStmt, columns));
@@ -78,19 +83,22 @@ abstract class TestExecute {
 
       test("sqlDescribeParam", () {
         _(sqlPrepare(hStmt, "SELECT name FROM customers WHERE customer_id = ?",
-                     SQL_NTS));
+            SQL_NTS));
 
         var dataType = new SqlInt();
         var parameterSize = new SqlInt();
         var decimalInteger = new SqlInt();
         var nullable = new SqlInt();
 
-        _(sqlDescribeParam(hStmt, 1, dataType, parameterSize, decimalInteger,
-                           nullable));
+        _(sqlDescribeParam(
+            hStmt, 1, dataType, parameterSize, decimalInteger, nullable));
 
-        expect(dataType.value, isNotNull, reason: "Parameter data type is null");
-        expect(parameterSize.value, isNotNull, reason: "Parameter size is null");
-        expect(decimalInteger.value, isNotNull, reason: "Decimal digits is null");
+        expect(dataType.value, isNotNull,
+            reason: "Parameter data type is null");
+        expect(parameterSize.value, isNotNull,
+            reason: "Parameter size is null");
+        expect(decimalInteger.value, isNotNull,
+            reason: "Decimal digits is null");
         expect(nullable.value, isNotNull, reason: "Nullable is null");
       });
 
@@ -104,18 +112,23 @@ abstract class TestExecute {
         var nullable = new SqlInt();
 
         _(sqlDescribeCol(hStmt, 1, name, name.length, null, dataType, size,
-                         decimalDigits, nullable));
+            decimalDigits, nullable));
 
         expect(name.value, isNotNull, reason: "Column name is null");
         expect(dataType.value, isNotNull, reason: "Column data type is null");
         expect(size.value, isNotNull, reason: "Column size is null");
-        expect(decimalDigits.value, isNotNull, reason: "Number of decimal digits is null");
-        expect(nullable.value, isNotNull, reason: "Column nullable flag is null");
+        expect(decimalDigits.value, isNotNull,
+            reason: "Number of decimal digits is null");
+        expect(nullable.value, isNotNull,
+            reason: "Column nullable flag is null");
       });
 
       test("sqlRowCount", () {
-        _(sqlExecDirect(hStmt,
-            "DELETE FROM customers WHERE customer_id <> customer_id", SQL_NTS),
+        _(
+            sqlExecDirect(
+                hStmt,
+                "DELETE FROM customers WHERE customer_id <> customer_id",
+                SQL_NTS),
             _successOrNodata);
 
         var count = new SqlInt();
@@ -128,8 +141,8 @@ abstract class TestExecute {
         var hStmt = new SqlHandle();
         _(sqlAllocHandle(SQL_HANDLE_STMT, _hConn, hStmt));
 
-        _(sqlPrepare(hStmt, "INSERT INTO pictures(part_id, picture) VALUES(1, ?)",
-                     SQL_NTS));
+        _(sqlPrepare(hStmt,
+            "INSERT INTO pictures(part_id, picture) VALUES(1, ?)", SQL_NTS));
 
         var picture = new SqlBinaryBuffer(16384);
         var param = new SqlPointer()..value = 1;
@@ -149,8 +162,8 @@ abstract class TestExecute {
         var hStmt = new SqlHandle();
         _(sqlAllocHandle(SQL_HANDLE_STMT, _hConn, hStmt));
 
-        _(sqlPrepare(hStmt, "INSERT INTO pictures(part_id, picture) VALUES(1, ?)",
-                     SQL_NTS));
+        _(sqlPrepare(hStmt,
+            "INSERT INTO pictures(part_id, picture) VALUES(1, ?)", SQL_NTS));
 
         var picture = new SqlBinaryBuffer(16384);
         var param = new SqlPointer()..value = 1;
@@ -165,7 +178,6 @@ abstract class TestExecute {
 
         _(sqlFreeHandle(SQL_HANDLE_STMT, hStmt));
       });
-
     });
   }
 }

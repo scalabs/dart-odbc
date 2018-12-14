@@ -23,13 +23,11 @@
 part of odbc_test;
 
 abstract class TestConnect {
-
   static void run() {
     var hEnv = new SqlHandle();
     var hConn = new SqlHandle();
 
     group("Connect", () {
-
       setUp(() {
         var version = new SqlPointer()..value = _VERSION;
 
@@ -57,11 +55,20 @@ abstract class TestConnect {
         var server = _SERVER == null ? "" : "SERVER=${_SERVER};";
         var database = _DATABASE == null ? "" : "DATABASE=${_DATABASE};";
 
-        _(sqlDriverConnect(hConn, null, "DRIVER=${_DRIVER};${server}${database}${uid}${pwd}",
-            SQL_NTS, connectString, connectString.length, null, SQL_DRIVER_NOPROMPT),
+        _(
+            sqlDriverConnect(
+                hConn,
+                null,
+                "DRIVER=${_DRIVER};${server}${database}${uid}${pwd}",
+                SQL_NTS,
+                connectString,
+                connectString.length,
+                null,
+                SQL_DRIVER_NOPROMPT),
             _successOrNeeddata);
 
-        expect(connectString.value, isNotNull, reason: "Connect String is null");
+        expect(connectString.value, isNotNull,
+            reason: "Connect String is null");
 
         _(sqlDisconnect(hConn));
       });
@@ -70,26 +77,28 @@ abstract class TestConnect {
         var connectString = new SqlString(2048);
 
         var result = sqlBrowseConnect(hConn, "DSN=${_DSN};", SQL_NTS,
-                                      connectString, connectString.length, null);
+            connectString, connectString.length, null);
 
         _(result, _successOrNeeddata);
 
-        expect(connectString.value, isNotNull, reason: "Connect String is null");
+        expect(connectString.value, isNotNull,
+            reason: "Connect String is null");
 
         if (result == SQL_NEED_DATA) {
           var uid = _UID == null ? "" : "UID=${_UID};";
           var pwd = _PWD == null ? "" : "PWD=${_PWD};";
 
-          _(sqlBrowseConnect(hConn, "${uid}${pwd}", SQL_NTS,
-                             connectString, connectString.length, null),
-                             _successOrNeeddata);
+          _(
+              sqlBrowseConnect(hConn, "${uid}${pwd}", SQL_NTS, connectString,
+                  connectString.length, null),
+              _successOrNeeddata);
 
-          expect(connectString.value, isNotNull, reason: "Connect String is null");
+          expect(connectString.value, isNotNull,
+              reason: "Connect String is null");
         }
 
         _(sqlDisconnect(hConn));
       });
-
     });
   }
 }

@@ -23,11 +23,8 @@
 part of odbc_test;
 
 abstract class TestHandle {
-
   static void run() {
-
     group("Handle", () {
-
       test("sql(Alloc/Free)Handle", () {
         var hEnv = new SqlHandle();
         _(sqlAllocHandle(SQL_HANDLE_ENV, null, hEnv));
@@ -73,7 +70,6 @@ abstract class TestHandle {
 
         _(sqlFreeEnv(hEnv));
       });
-
     });
   }
 }

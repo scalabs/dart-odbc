@@ -23,23 +23,22 @@
 part of odbc_test;
 
 abstract class TestBlob {
-
   static void run() {
-
     group("Blob", () {
-
       test("sql(Param/Put)Data", () {
         var hStmt = new SqlHandle();
         _(sqlAllocHandle(SQL_HANDLE_STMT, _hConn, hStmt));
 
-        _(sqlExecDirect(hStmt, "DELETE FROM pictures WHERE part_id = 1", SQL_NTS),
+        _(
+            sqlExecDirect(
+                hStmt, "DELETE FROM pictures WHERE part_id = 1", SQL_NTS),
             _successOrNodata);
 
-        _(sqlPrepare(hStmt, "INSERT INTO pictures(part_id, picture) VALUES(1, ?)",
-                     SQL_NTS));
+        _(sqlPrepare(hStmt,
+            "INSERT INTO pictures(part_id, picture) VALUES(1, ?)", SQL_NTS));
 
         var picture = new SqlBinaryBuffer(16384);
-        for (var i = 0; i < picture.rows; ++ i) {
+        for (var i = 0; i < picture.rows; ++i) {
           picture.poke(i & 0xff, i);
         }
 
@@ -54,8 +53,10 @@ abstract class TestBlob {
         var need = new SqlPointer();
         var retcode = sqlParamData(hStmt, need);
 
-        expect(retcode, equals(SQL_NEED_DATA), reason: "Statement not need data");
-        expect(need.value, equals(1), reason: "Parameter that need data is not 1");
+        expect(retcode, equals(SQL_NEED_DATA),
+            reason: "Statement not need data");
+        expect(need.value, equals(1),
+            reason: "Parameter that need data is not 1");
 
         var remainder = picture.rows;
         const chunk = 1000;
@@ -75,7 +76,6 @@ abstract class TestBlob {
 
         _(sqlFreeHandle(SQL_HANDLE_STMT, hStmt));
       });
-
     });
   }
 }

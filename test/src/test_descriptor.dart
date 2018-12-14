@@ -23,11 +23,8 @@
 part of odbc_test;
 
 abstract class TestDescriptor {
-
   static void run() {
-
     group("Descriptor", () {
-
       test("sqlGetDesc(Rec/Field)", () {
         if (_VERSION >= SQL_OV_ODBC3) {
           var hStmt = new SqlHandle();
@@ -48,7 +45,7 @@ abstract class TestDescriptor {
           var nullable = new SqlInt();
 
           _(sqlGetDescRec(hDesc, 1, name, name.length, null, type, subtype,
-                          length, precision, scale, nullable));
+              length, precision, scale, nullable));
 
           expect(name.value, isNotNull);
           expect(type.value, isNotNull);
@@ -59,12 +56,14 @@ abstract class TestDescriptor {
           expect(nullable.value, isNotNull);
 
           var nameField = new SqlString(32);
-          _(sqlGetDescField(hDesc, 1, SQL_DESC_NAME, nameField, nameField.length, null));
+          _(sqlGetDescField(
+              hDesc, 1, SQL_DESC_NAME, nameField, nameField.length, null));
 
           expect(nameField.value, equals(name.value));
 
           var typeField = new SqlSmallIntBox();
-          _(sqlGetDescField(hDesc, 1, SQL_DESC_TYPE, typeField, SQL_IS_SMALLINT, null));
+          _(sqlGetDescField(
+              hDesc, 1, SQL_DESC_TYPE, typeField, SQL_IS_SMALLINT, null));
 
           expect(typeField.value, equals(type.value));
 
@@ -76,7 +75,8 @@ abstract class TestDescriptor {
         if (_VERSION >= SQL_OV_ODBC3) {
           var hStmt = new SqlHandle();
           _(sqlAllocHandle(SQL_HANDLE_STMT, _hConn, hStmt));
-          _(sqlPrepare(hStmt, "SELECT price FROM parts WHERE part_id = ?", SQL_NTS));
+          _(sqlPrepare(
+              hStmt, "SELECT price FROM parts WHERE part_id = ?", SQL_NTS));
 
           var hDesc = new SqlHandle();
           _(sqlGetStmtAttr(hStmt, SQL_ATTR_IMP_PARAM_DESC, hDesc, 0, null));
@@ -84,7 +84,8 @@ abstract class TestDescriptor {
           _(sqlSetDescRec(hDesc, 1, 3, 0, 0, 15, 0, null, null, null));
 
           var precision = new SqlPointer()..value = 20;
-          _(sqlSetDescField(hDesc, 1, SQL_DESC_PRECISION, precision, SQL_IS_SMALLINT));
+          _(sqlSetDescField(
+              hDesc, 1, SQL_DESC_PRECISION, precision, SQL_IS_SMALLINT));
 
           _(sqlFreeHandle(SQL_HANDLE_STMT, hStmt));
         }
@@ -104,8 +105,6 @@ abstract class TestDescriptor {
           _(sqlFreeHandle(SQL_HANDLE_DESC, hDescTarget));
         }
       });
-
     });
   }
 }
-

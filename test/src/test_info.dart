@@ -23,29 +23,29 @@
 part of odbc_test;
 
 abstract class TestInfo {
-
   static void run() {
-
     group("Info", () {
-
       test("sqlDataSources", () {
         var server = new SqlString(256);
         var description = new SqlString(256);
         _(sqlDataSources(_hEnv, SQL_FETCH_FIRST, server, server.length, null,
-                         description, description.length, null));
+            description, description.length, null));
 
         expect(server.value, isNotNull, reason: "Server name is null");
-        expect(description.value, isNotNull, reason: "Server description is null");
+        expect(description.value, isNotNull,
+            reason: "Server description is null");
       });
 
       test("sqlDrivers", () {
         var description = new SqlString(256);
         var attributes = new SqlString(256);
-        _(sqlDrivers(_hEnv, SQL_FETCH_FIRST, description, description.length, null,
-                     attributes, attributes.length, null));
+        _(sqlDrivers(_hEnv, SQL_FETCH_FIRST, description, description.length,
+            null, attributes, attributes.length, null));
 
-        expect(description.value, isNotNull, reason: "Driver description is null");
-        expect(attributes.value, isNotNull, reason: "Driver attributes are null");
+        expect(description.value, isNotNull,
+            reason: "Driver description is null");
+        expect(attributes.value, isNotNull,
+            reason: "Driver attributes are null");
       });
 
       test("sqlGetInfo", () {
@@ -67,12 +67,15 @@ abstract class TestInfo {
         expect(function.peek(), equals(SQL_TRUE));
 
         var functionsv2 = new SqlUSmallIntBuffer(100);
-        _(sqlGetFunctions(_hConn, SQL_API_ALL_FUNCTIONS, functionsv2.address()));
+        _(sqlGetFunctions(
+            _hConn, SQL_API_ALL_FUNCTIONS, functionsv2.address()));
 
         expect(functionsv2.peek(SQL_API_SQLCONNECT), equals(SQL_TRUE));
 
-        var functionsv3 = new SqlUSmallIntBuffer(SQL_API_ODBC3_ALL_FUNCTIONS_SIZE);
-        _(sqlGetFunctions(_hConn, SQL_API_ODBC3_ALL_FUNCTIONS, functionsv3.address()));
+        var functionsv3 =
+            new SqlUSmallIntBuffer(SQL_API_ODBC3_ALL_FUNCTIONS_SIZE);
+        _(sqlGetFunctions(
+            _hConn, SQL_API_ODBC3_ALL_FUNCTIONS, functionsv3.address()));
 
         expect(sqlFunctionExists(functionsv3, SQL_API_SQLCONNECT), isTrue);
       });
@@ -86,7 +89,6 @@ abstract class TestInfo {
 
         _(sqlFreeHandle(SQL_HANDLE_STMT, hStmt));
       });
-
     });
   }
 }

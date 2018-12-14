@@ -28,10 +28,10 @@ References:
 
 part of odbc;
 
-const int SQL_WCHAR        =  -8;
-const int SQL_WVARCHAR     =  -9;
+const int SQL_WCHAR = -8;
+const int SQL_WVARCHAR = -9;
 const int SQL_WLONGVARCHAR = -10;
-const int SQL_C_WCHAR      = SQL_WCHAR;
+const int SQL_C_WCHAR = SQL_WCHAR;
 
 int get SQL_C_TCHAR => ODBC_UNICODE ? SQL_C_WCHAR : SQL_C_CHAR;
 

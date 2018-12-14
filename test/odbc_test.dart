@@ -62,19 +62,23 @@ void main(List<String> args) {
 
 bool _readArgs(List<String> args) {
   var parser = new ArgParser();
-  parser.addOption("driver", help: "Driver name (e.g. \"Oracle ODBC\")",
+  parser.addOption("driver",
+      help: "Driver name (e.g. \"Oracle ODBC\")",
       callback: (driver) => _DRIVER = driver);
-  parser.addOption("version", help: "ODBC version (1, 2, 3, ...)",
+  parser.addOption("version",
+      help: "ODBC version (1, 2, 3, ...)",
       callback: (version) => _VERSION = int.parse(version));
-  parser.addOption("dsn", help: "Data Source Name", callback: (dsn) => _DSN = dsn);
-  parser.addOption("uid", help: "User",  callback: (uid) => _UID = uid);
+  parser.addOption("dsn",
+      help: "Data Source Name", callback: (dsn) => _DSN = dsn);
+  parser.addOption("uid", help: "User", callback: (uid) => _UID = uid);
   parser.addOption("pwd", help: "Password", callback: (pwd) => _PWD = pwd);
-  parser.addOption("server", help: "Server (e.g. localhost)",
-      callback: (server) => _SERVER = server);
-  parser.addOption("database", help: "Database name (e.g. postgres)",
+  parser.addOption("server",
+      help: "Server (e.g. localhost)", callback: (server) => _SERVER = server);
+  parser.addOption("database",
+      help: "Database name (e.g. postgres)",
       callback: (database) => _DATABASE = database);
-  parser.addOption("catalog", help: "Catalog name",
-      callback: (catalog) => _CATALOG = catalog);
+  parser.addOption("catalog",
+      help: "Catalog name", callback: (catalog) => _CATALOG = catalog);
 
   if (args.isEmpty) {
     print("Usage: odbc_test --option value ...\n${parser.getUsage()}");
@@ -101,7 +105,8 @@ void _runTests() {
     _(sqlAllocHandle(SQL_HANDLE_ENV, null, _hEnv));
     _(sqlSetEnvAttr(_hEnv, SQL_ATTR_ODBC_VERSION, version, 0));
     _(sqlAllocHandle(SQL_HANDLE_DBC, _hEnv, _hConn));
-    _(sqlSetConnectAttr(_hConn, SQL_ATTR_AUTOCOMMIT, autocommit, SQL_IS_UINTEGER));
+    _(sqlSetConnectAttr(
+        _hConn, SQL_ATTR_AUTOCOMMIT, autocommit, SQL_IS_UINTEGER));
     _(sqlConnect(_hConn, _DSN, SQL_NTS, _UID, SQL_NTS, _PWD, SQL_NTS));
     _(sqlAllocHandle(SQL_HANDLE_STMT, _hConn, hStmt));
     if (catalog.value != null) {

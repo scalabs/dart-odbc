@@ -53,23 +53,22 @@ class SqlTimestamp {
   int second;
   int fraction;
 
-  SqlTimestamp(this.year, this.month, this.day,
-               this.hour, this.minute, this.second,
-               this.fraction);
+  SqlTimestamp(this.year, this.month, this.day, this.hour, this.minute,
+      this.second, this.fraction);
 }
 
-const int SQL_IS_YEAR             = 1;
-const int SQL_IS_MONTH            = 2;
-const int SQL_IS_DAY              = 3;
-const int SQL_IS_HOUR             = 4;
-const int SQL_IS_MINUTE           = 5;
-const int SQL_IS_SECOND           = 6;
-const int SQL_IS_YEAR_TO_MONTH    = 7;
-const int SQL_IS_DAY_TO_HOUR      = 8;
-const int SQL_IS_DAY_TO_MINUTE    = 9;
-const int SQL_IS_DAY_TO_SECOND    = 10;
-const int SQL_IS_HOUR_TO_MINUTE   = 11;
-const int SQL_IS_HOUR_TO_SECOND   = 12;
+const int SQL_IS_YEAR = 1;
+const int SQL_IS_MONTH = 2;
+const int SQL_IS_DAY = 3;
+const int SQL_IS_HOUR = 4;
+const int SQL_IS_MINUTE = 5;
+const int SQL_IS_SECOND = 6;
+const int SQL_IS_YEAR_TO_MONTH = 7;
+const int SQL_IS_DAY_TO_HOUR = 8;
+const int SQL_IS_DAY_TO_MINUTE = 9;
+const int SQL_IS_DAY_TO_SECOND = 10;
+const int SQL_IS_HOUR_TO_MINUTE = 11;
+const int SQL_IS_HOUR_TO_SECOND = 12;
 const int SQL_IS_MINUTE_TO_SECOND = 13;
 
 class SqlYearMonth {
@@ -118,4 +117,3 @@ class SqlGuid {
 
   SqlGuid(this.data1, this.data2, this.data3, this.data4);
 }
-

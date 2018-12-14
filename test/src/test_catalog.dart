@@ -23,12 +23,10 @@
 part of odbc_test;
 
 abstract class TestCatalog {
-
   static void run() {
     var hStmt = new SqlHandle();
 
     group("Catalog", () {
-
       setUp(() {
         _(sqlAllocHandle(SQL_HANDLE_STMT, _hConn, hStmt));
       });
@@ -39,7 +37,7 @@ abstract class TestCatalog {
 
       test("sqlTables", () {
         _(sqlTables(hStmt, null, 0, "", SQL_NTS, "", SQL_NTS,
-                    SQL_ALL_TABLE_TYPES, SQL_NTS));
+            SQL_ALL_TABLE_TYPES, SQL_NTS));
       });
 
       test("sqlColumns", () {
@@ -51,18 +49,18 @@ abstract class TestCatalog {
       });
 
       test("sqlForeignKeys", () {
-        _(sqlForeignKeys(hStmt, null, 0, "", SQL_NTS, "", SQL_NTS, null, 0,
-                         "", SQL_NTS, "", SQL_NTS));
+        _(sqlForeignKeys(hStmt, null, 0, "", SQL_NTS, "", SQL_NTS, null, 0, "",
+            SQL_NTS, "", SQL_NTS));
       });
 
       test("sqlSpecialColumns", () {
         _(sqlSpecialColumns(hStmt, SQL_BEST_ROWID, null, 0, "", SQL_NTS,
-                            "customers", SQL_NTS, SQL_SCOPE_CURROW, SQL_NULLABLE));
+            "customers", SQL_NTS, SQL_SCOPE_CURROW, SQL_NULLABLE));
       });
 
       test("sqlStatistics", () {
-        _(sqlStatistics(hStmt,null, 0, "", SQL_NTS, "customers", SQL_NTS,
-                        SQL_INDEX_ALL, SQL_QUICK));
+        _(sqlStatistics(hStmt, null, 0, "", SQL_NTS, "customers", SQL_NTS,
+            SQL_INDEX_ALL, SQL_QUICK));
       });
 
       test("sqlTablePrivileges", () {
@@ -70,8 +68,8 @@ abstract class TestCatalog {
       });
 
       test("sqlColumnPrivileges", () {
-        _(sqlColumnPrivileges(hStmt, null, 0, "", SQL_NTS, "customers", SQL_NTS,
-                              "", SQL_NTS));
+        _(sqlColumnPrivileges(
+            hStmt, null, 0, "", SQL_NTS, "customers", SQL_NTS, "", SQL_NTS));
       });
 
       test("sqlProcedures", () {
@@ -79,10 +77,9 @@ abstract class TestCatalog {
       });
 
       test("sqlProcedureColumns", () {
-        _(sqlProcedureColumns(hStmt, null, 0, "", SQL_NTS, "", SQL_NTS,
-                              "", SQL_NTS));
+        _(sqlProcedureColumns(
+            hStmt, null, 0, "", SQL_NTS, "", SQL_NTS, "", SQL_NTS));
       });
-
     });
   }
 }

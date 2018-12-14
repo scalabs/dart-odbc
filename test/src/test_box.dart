@@ -23,11 +23,8 @@
 part of odbc_test;
 
 abstract class TestBox {
-
   static void run() {
-
     group("Box", () {
-
       test("SqlIntBox", () {
         var box = new SqlInt();
 
@@ -81,10 +78,13 @@ abstract class TestBox {
         expect(buffer.length(0), equals(buffer.length()));
 
         expect(buffer.rowSize(), isNotNull, reason: "Row size value is null");
-        expect(buffer.rowSize(), greaterThan(0), reason: "Row size value is negative");
+        expect(buffer.rowSize(), greaterThan(0),
+            reason: "Row size value is negative");
 
-        expect(buffer.address().value, isNotNull, reason: "Buffer address value is null");
-        expect(buffer.address().value, isNonZero, reason: "Buffer address value is 0");
+        expect(buffer.address().value, isNotNull,
+            reason: "Buffer address value is null");
+        expect(buffer.address().value, isNonZero,
+            reason: "Buffer address value is 0");
         expect(buffer.address().value, equals(buffer.address(0).value));
         expect(buffer.address(0).value, equals(buffer.address(0, 0).value));
 
@@ -138,10 +138,13 @@ abstract class TestBox {
         expect(buffer.length(0), equals(buffer.length()));
 
         expect(buffer.rowSize(), isNotNull, reason: "Row size value is null");
-        expect(buffer.rowSize(), isPositive, reason: "Row size value is negative");
+        expect(buffer.rowSize(), isPositive,
+            reason: "Row size value is negative");
 
-        expect(buffer.address().value, isNotNull, reason: "Buffer address value is null");
-        expect(buffer.address().value, isNonZero, reason: "Buffer address value is 0");
+        expect(buffer.address().value, isNotNull,
+            reason: "Buffer address value is null");
+        expect(buffer.address().value, isNonZero,
+            reason: "Buffer address value is 0");
         expect(buffer.address().value, equals(buffer.address(0).value));
         expect(buffer.address(0).value, equals(buffer.address(0, 0).value));
 
@@ -195,10 +198,13 @@ abstract class TestBox {
         expect(buffer.length(), equals(buffer.length(0)));
 
         expect(buffer.rowSize(), isNotNull, reason: "Row size value is null");
-        expect(buffer.rowSize(), greaterThan(0), reason: "Row size value is negative");
+        expect(buffer.rowSize(), greaterThan(0),
+            reason: "Row size value is negative");
 
-        expect(buffer.address().value, isNotNull, reason: "Buffer address value is null");
-        expect(buffer.address().value, isNonZero, reason: "Buffer address value is 0");
+        expect(buffer.address().value, isNotNull,
+            reason: "Buffer address value is null");
+        expect(buffer.address().value, isNonZero,
+            reason: "Buffer address value is 0");
         expect(buffer.address().value, equals(buffer.address(0).value));
         expect(buffer.address(0).value, equals(buffer.address(0, 0).value));
         expect(buffer.address(1).value, equals(buffer.address(1, 0).value));
@@ -267,10 +273,13 @@ abstract class TestBox {
         expect(buffer.length(), equals(buffer.length(0)));
 
         expect(buffer.rowSize(), isNotNull, reason: "Row size value is null");
-        expect(buffer.rowSize(), greaterThan(0), reason: "Row size value is negative");
+        expect(buffer.rowSize(), greaterThan(0),
+            reason: "Row size value is negative");
 
-        expect(buffer.address().value, isNotNull, reason: "Buffer address value is null");
-        expect(buffer.address().value, isNonZero, reason: "Buffer address value is 0");
+        expect(buffer.address().value, isNotNull,
+            reason: "Buffer address value is null");
+        expect(buffer.address().value, isNonZero,
+            reason: "Buffer address value is 0");
         expect(buffer.address().value, equals(buffer.address(0).value));
         expect(buffer.address(0).value, equals(buffer.address(0, 0).value));
         expect(buffer.address(1).value, equals(buffer.address(1, 0).value));
@@ -327,7 +336,10 @@ abstract class TestBox {
       });
 
       test("SqlArrayBuffer", () {
-        var types = <TypeLen>[new TypeLen(SQL_C_CHAR, 16), new TypeLen(SQL_C_SLONG)];
+        var types = <TypeLen>[
+          new TypeLen(SQL_C_CHAR, 16),
+          new TypeLen(SQL_C_SLONG)
+        ];
         var buffer = new SqlArrayBuffer(types, 3);
 
         expect(buffer.rows, equals(3), reason: "rows value is not set");
@@ -340,62 +352,97 @@ abstract class TestBox {
         expect(buffer.length(1), equals(1), reason: "length value is not set");
 
         expect(buffer.rowSize(), isNotNull, reason: "Row size value is null");
-        expect(buffer.rowSize(), greaterThan(0), reason: "Row size value is negative");
+        expect(buffer.rowSize(), greaterThan(0),
+            reason: "Row size value is negative");
 
         var rowSize = buffer.address(1, 0).value - buffer.address(0, 0).value;
-        expect(buffer.rowSize(), equals(rowSize), reason: "Row size value seems incorrect");
+        expect(buffer.rowSize(), equals(rowSize),
+            reason: "Row size value seems incorrect");
 
-        expect(buffer.address(0, 0).value, isNotNull, reason: "Buffer address value is null");
-        expect(buffer.address(0, 1).value, isNotNull, reason: "Buffer address value is null");
-        expect(buffer.address(1, 0).value, isNotNull, reason: "Buffer address value is null");
-        expect(buffer.address(1, 1).value, isNotNull, reason: "Buffer address value is null");
-        expect(buffer.address(2, 0).value, isNotNull, reason: "Buffer address value is null");
-        expect(buffer.address(2, 1).value, isNotNull, reason: "Buffer address value is null");
+        expect(buffer.address(0, 0).value, isNotNull,
+            reason: "Buffer address value is null");
+        expect(buffer.address(0, 1).value, isNotNull,
+            reason: "Buffer address value is null");
+        expect(buffer.address(1, 0).value, isNotNull,
+            reason: "Buffer address value is null");
+        expect(buffer.address(1, 1).value, isNotNull,
+            reason: "Buffer address value is null");
+        expect(buffer.address(2, 0).value, isNotNull,
+            reason: "Buffer address value is null");
+        expect(buffer.address(2, 1).value, isNotNull,
+            reason: "Buffer address value is null");
 
-        expect(buffer.address(0, 0).value, isNonZero, reason: "Buffer address value is 0");
-        expect(buffer.address(0, 1).value, isNonZero, reason: "Buffer address value is 0");
-        expect(buffer.address(1, 0).value, isNonZero, reason: "Buffer address value is 0");
-        expect(buffer.address(1, 1).value, isNonZero, reason: "Buffer address value is 0");
-        expect(buffer.address(2, 0).value, isNonZero, reason: "Buffer address value is 0");
-        expect(buffer.address(2, 1).value, isNonZero, reason: "Buffer address value is 0");
+        expect(buffer.address(0, 0).value, isNonZero,
+            reason: "Buffer address value is 0");
+        expect(buffer.address(0, 1).value, isNonZero,
+            reason: "Buffer address value is 0");
+        expect(buffer.address(1, 0).value, isNonZero,
+            reason: "Buffer address value is 0");
+        expect(buffer.address(1, 1).value, isNonZero,
+            reason: "Buffer address value is 0");
+        expect(buffer.address(2, 0).value, isNonZero,
+            reason: "Buffer address value is 0");
+        expect(buffer.address(2, 1).value, isNonZero,
+            reason: "Buffer address value is 0");
 
-        expect(buffer.address(0, 0).value, isNot(equals(buffer.address(0, 1).value)),
+        expect(buffer.address(0, 0).value,
+            isNot(equals(buffer.address(0, 1).value)),
             reason: "Buffer addresses are the same");
-        expect(buffer.address(0, 0).value, isNot(equals(buffer.address(1, 0).value)),
+        expect(buffer.address(0, 0).value,
+            isNot(equals(buffer.address(1, 0).value)),
             reason: "Buffer addresses are the same");
-        expect(buffer.address(0, 0).value, isNot(equals(buffer.address(1, 1).value)),
+        expect(buffer.address(0, 0).value,
+            isNot(equals(buffer.address(1, 1).value)),
             reason: "Buffer addresses are the same");
-        expect(buffer.address(0, 0).value, isNot(equals(buffer.address(2, 0).value)),
+        expect(buffer.address(0, 0).value,
+            isNot(equals(buffer.address(2, 0).value)),
             reason: "Buffer addresses are the same");
-        expect(buffer.address(0, 0).value, isNot(equals(buffer.address(2, 1).value)),
+        expect(buffer.address(0, 0).value,
+            isNot(equals(buffer.address(2, 1).value)),
             reason: "Buffer addresses are the same");
-        expect(buffer.address(0, 1).value, isNot(equals(buffer.address(1, 0).value)),
+        expect(buffer.address(0, 1).value,
+            isNot(equals(buffer.address(1, 0).value)),
             reason: "Buffer addresses are the same");
-        expect(buffer.address(0, 1).value, isNot(equals(buffer.address(1, 1).value)),
+        expect(buffer.address(0, 1).value,
+            isNot(equals(buffer.address(1, 1).value)),
             reason: "Buffer addresses are the same");
-        expect(buffer.address(0, 1).value, isNot(equals(buffer.address(2, 0).value)),
+        expect(buffer.address(0, 1).value,
+            isNot(equals(buffer.address(2, 0).value)),
             reason: "Buffer addresses are the same");
-        expect(buffer.address(0, 1).value, isNot(equals(buffer.address(2, 1).value)),
+        expect(buffer.address(0, 1).value,
+            isNot(equals(buffer.address(2, 1).value)),
             reason: "Buffer addresses are the same");
-        expect(buffer.address(1, 0).value, isNot(equals(buffer.address(1, 1).value)),
+        expect(buffer.address(1, 0).value,
+            isNot(equals(buffer.address(1, 1).value)),
             reason: "Buffer addresses are the same");
-        expect(buffer.address(1, 0).value, isNot(equals(buffer.address(2, 0).value)),
+        expect(buffer.address(1, 0).value,
+            isNot(equals(buffer.address(2, 0).value)),
             reason: "Buffer addresses are the same");
-        expect(buffer.address(1, 0).value, isNot(equals(buffer.address(2, 1).value)),
+        expect(buffer.address(1, 0).value,
+            isNot(equals(buffer.address(2, 1).value)),
             reason: "Buffer addresses are the same");
-        expect(buffer.address(1, 1).value, isNot(equals(buffer.address(2, 0).value)),
+        expect(buffer.address(1, 1).value,
+            isNot(equals(buffer.address(2, 0).value)),
             reason: "Buffer addresses are the same");
-        expect(buffer.address(1, 1).value, isNot(equals(buffer.address(2, 1).value)),
+        expect(buffer.address(1, 1).value,
+            isNot(equals(buffer.address(2, 1).value)),
             reason: "Buffer addresses are the same");
-        expect(buffer.address(2, 0).value, isNot(equals(buffer.address(2, 1).value)),
+        expect(buffer.address(2, 0).value,
+            isNot(equals(buffer.address(2, 1).value)),
             reason: "Buffer addresses are the same");
 
-        expect(buffer.peek(0, 0), equals(""), reason: "Initial value is not set");
-        expect(buffer.peek(0, 1), equals(0), reason: "Initial value is not set");
-        expect(buffer.peek(1, 0), equals(""), reason: "Initial value is not set");
-        expect(buffer.peek(1, 1), equals(0), reason: "Initial value is not set");
-        expect(buffer.peek(2, 0), equals(""), reason: "Initial value is not set");
-        expect(buffer.peek(2, 1), equals(0), reason: "Initial value is not set");
+        expect(buffer.peek(0, 0), equals(""),
+            reason: "Initial value is not set");
+        expect(buffer.peek(0, 1), equals(0),
+            reason: "Initial value is not set");
+        expect(buffer.peek(1, 0), equals(""),
+            reason: "Initial value is not set");
+        expect(buffer.peek(1, 1), equals(0),
+            reason: "Initial value is not set");
+        expect(buffer.peek(2, 0), equals(""),
+            reason: "Initial value is not set");
+        expect(buffer.peek(2, 1), equals(0),
+            reason: "Initial value is not set");
 
         buffer.poke("ab", 0, 0);
         buffer.poke(11, 0, 1);
@@ -427,7 +474,6 @@ abstract class TestBox {
         expect(() => buffer.poke(null, 0, -1), throws);
         expect(() => buffer.poke(null, 0, 2), throws);
       });
-
     });
   }
 }

@@ -23,11 +23,8 @@
 part of odbc_test;
 
 abstract class TestAttribute {
-
   static void run() {
-
     group("Attribute", () {
-
       test("sql(Set/Get)(Env/Connect/Stmt)Attr", () {
         var hEnv = new SqlHandle();
         var hConn = new SqlHandle();
@@ -49,10 +46,12 @@ abstract class TestAttribute {
         _(sqlConnect(hConn, _DSN, SQL_NTS, _UID, SQL_NTS, _PWD, SQL_NTS));
 
         var autocommit = new SqlPointer()..value = SQL_AUTOCOMMIT_OFF;
-        _(sqlSetConnectAttr(hConn, SQL_ATTR_AUTOCOMMIT, autocommit, SQL_IS_UINTEGER));
+        _(sqlSetConnectAttr(
+            hConn, SQL_ATTR_AUTOCOMMIT, autocommit, SQL_IS_UINTEGER));
 
         var autocommitGet = new SqlPointer();
-        _(sqlGetConnectAttr(hConn, SQL_ATTR_AUTOCOMMIT, autocommitGet, SQL_IS_UINTEGER, null));
+        _(sqlGetConnectAttr(
+            hConn, SQL_ATTR_AUTOCOMMIT, autocommitGet, SQL_IS_UINTEGER, null));
 
         expect(autocommitGet.value, equals(autocommit.value));
 
@@ -60,10 +59,12 @@ abstract class TestAttribute {
         _(sqlAllocHandle(SQL_HANDLE_STMT, hConn, hStmt));
 
         var size = new SqlPointer()..value = 20;
-        _(sqlSetStmtAttr(hStmt, SQL_ATTR_ROW_ARRAY_SIZE, size, SQL_IS_UINTEGER));
+        _(sqlSetStmtAttr(
+            hStmt, SQL_ATTR_ROW_ARRAY_SIZE, size, SQL_IS_UINTEGER));
 
         var sizeGet = new SqlPointer();
-        _(sqlGetStmtAttr(hStmt, SQL_ATTR_ROW_ARRAY_SIZE, sizeGet, SQL_IS_UINTEGER, null));
+        _(sqlGetStmtAttr(
+            hStmt, SQL_ATTR_ROW_ARRAY_SIZE, sizeGet, SQL_IS_UINTEGER, null));
 
         expect(size.value, sizeGet.value);
 
@@ -72,12 +73,14 @@ abstract class TestAttribute {
           _(sqlParamOptions(hStmt, 30, status.address()));
 
           var statusGet = new SqlPointer();
-          _(sqlGetStmtAttr(hStmt, SQL_ATTR_PARAMS_PROCESSED_PTR, statusGet, SQL_IS_POINTER, null));
+          _(sqlGetStmtAttr(hStmt, SQL_ATTR_PARAMS_PROCESSED_PTR, statusGet,
+              SQL_IS_POINTER, null));
 
           expect(statusGet.value, status.address().value);
 
           var sizeParamGet = new SqlPointer();
-          _(sqlGetStmtAttr(hStmt, SQL_ATTR_PARAMSET_SIZE, sizeParamGet, SQL_IS_UINTEGER, null));
+          _(sqlGetStmtAttr(hStmt, SQL_ATTR_PARAMSET_SIZE, sizeParamGet,
+              SQL_IS_UINTEGER, null));
 
           expect(sizeParamGet.value, 30);
         }

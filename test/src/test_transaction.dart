@@ -23,11 +23,8 @@
 part of odbc_test;
 
 abstract class TestTransaction {
-
   static void run() {
-
     group("Transaction", () {
-
       test("sqlEndTran", () {
         _(sqlEndTran(SQL_HANDLE_DBC, _hConn, SQL_ROLLBACK));
 
@@ -38,24 +35,32 @@ abstract class TestTransaction {
         var hStmt = new SqlHandle();
         _(sqlAllocHandle(SQL_HANDLE_STMT, _hConn, hStmt));
 
-        _(sqlExecDirect(hStmt, "SELECT MAX(customer_id) FROM customers", SQL_NTS));
+        _(sqlExecDirect(
+            hStmt, "SELECT MAX(customer_id) FROM customers", SQL_NTS));
 
         var maxId = new SqlIntBuffer();
         var flags = new SqlIntBuffer();
-        _(sqlBindCol(hStmt, 1, maxId.ctype(), maxId.address(), 0, flags.address()));
+        _(sqlBindCol(
+            hStmt, 1, maxId.ctype(), maxId.address(), 0, flags.address()));
 
         _(sqlFetch(hStmt));
 
         _(sqlCloseCursor(hStmt));
 
         var customerId = flags.peek() == SQL_NULL_DATA ? 1 : maxId.peek() + 1;
-        _(sqlExecDirect(hStmt, "INSERT INTO customers(customer_id, name)"
-                        " VALUES(${customerId}, 'John')", SQL_NTS));
+        _(sqlExecDirect(
+            hStmt,
+            "INSERT INTO customers(customer_id, name)"
+            " VALUES(${customerId}, 'John')",
+            SQL_NTS));
 
         _(sqlEndTran(SQL_HANDLE_DBC, _hConn, SQL_ROLLBACK));
 
-        _(sqlExecDirect(hStmt, "SELECT name FROM customers"
-                        " WHERE customer_id = ${customerId}", SQL_NTS));
+        _(sqlExecDirect(
+            hStmt,
+            "SELECT name FROM customers"
+            " WHERE customer_id = ${customerId}",
+            SQL_NTS));
 
         _(sqlFetch(hStmt), _nodata);
 
@@ -63,7 +68,6 @@ abstract class TestTransaction {
 
         _(sqlFreeHandle(SQL_HANDLE_STMT, hStmt));
       });
-
 
       test("sqlTransact", () {
         _(sqlTransact(_hEnv, _hConn, SQL_ROLLBACK));
@@ -75,24 +79,32 @@ abstract class TestTransaction {
         var hStmt = new SqlHandle();
         _(sqlAllocHandle(SQL_HANDLE_STMT, _hConn, hStmt));
 
-        _(sqlExecDirect(hStmt, "SELECT MAX(customer_id) FROM customers", SQL_NTS));
+        _(sqlExecDirect(
+            hStmt, "SELECT MAX(customer_id) FROM customers", SQL_NTS));
 
         var maxId = new SqlIntBuffer();
         var flags = new SqlIntBuffer();
-        _(sqlBindCol(hStmt, 1, maxId.ctype(), maxId.address(), 0, flags.address()));
+        _(sqlBindCol(
+            hStmt, 1, maxId.ctype(), maxId.address(), 0, flags.address()));
 
         _(sqlFetch(hStmt));
 
         _(sqlCloseCursor(hStmt));
 
         var customerId = flags.peek() == SQL_NULL_DATA ? 1 : maxId.peek() + 1;
-        _(sqlExecDirect(hStmt, "INSERT INTO customers(customer_id, name)"
-                        " VALUES(${customerId}, 'John')", SQL_NTS));
+        _(sqlExecDirect(
+            hStmt,
+            "INSERT INTO customers(customer_id, name)"
+            " VALUES(${customerId}, 'John')",
+            SQL_NTS));
 
         _(sqlTransact(_hEnv, _hConn, SQL_ROLLBACK));
 
-        _(sqlExecDirect(hStmt, "SELECT name FROM customers"
-                        " WHERE customer_id = ${customerId}", SQL_NTS));
+        _(sqlExecDirect(
+            hStmt,
+            "SELECT name FROM customers"
+            " WHERE customer_id = ${customerId}",
+            SQL_NTS));
 
         _(sqlFetch(hStmt), _nodata);
 
@@ -100,7 +112,6 @@ abstract class TestTransaction {
 
         _(sqlFreeHandle(SQL_HANDLE_STMT, hStmt));
       });
-
     });
   }
 }
