@@ -901,7 +901,7 @@ ODBC_EXT_FUNCTION(sqlSetParam)
                                     getSqlUInteger(ARGS(4)),
                                     getSqlSmallInt(ARGS(5)),
                                     unboxSqlPointer(ARGS(6)),
-                                    unboxSqlIntegerPtr(ARGS(7)));
+                                    unboxSqlLenPtr(ARGS(7)));
 ODBC_EXT_SQLRETURN(sqlReturn)
 
 //SQLSetPos
