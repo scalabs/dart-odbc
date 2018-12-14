@@ -25,10 +25,11 @@ homepage: http://code.google.com/p/dart-odbc/
 description: ODBC binding for Dart.
 
 environment:
-  sdk: ">=1.5.3"
+  sdk: ">=2.1.0"
 
 dependencies:
-  args: ">=0.12.0+1"
+  args: ^1.5.1
 
 dev_dependencies:
-  unittest: ">=0.11.0+3"
+  test:
+
