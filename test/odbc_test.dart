@@ -24,7 +24,7 @@ library odbc_test;
 
 import "package:odbc/odbc.dart";
 import "package:args/args.dart";
-import "package:unittest/unittest.dart";
+import "package:test/test.dart";
 
 part "src/test.dart";
 part "src/test_box.dart";
