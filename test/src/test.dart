@@ -30,10 +30,12 @@ var _hConn = new SqlHandle();
 void _(int result, [bool eval(int) = sqlSucceeded]) =>
     expect(eval(result), isTrue, reason: "SQLRETURN is ${result}");
 
-bool _nodata(int result) => result == SQL_NO_DATA;
+bool _nodata(dynamic result) => result == SQL_NO_DATA;
 
-bool _needdata(int result) => result == SQL_NEED_DATA;
+bool _needdata(dynamic result) => result == SQL_NEED_DATA;
 
-bool _successOrNodata(int result) => sqlSucceeded(result) || _nodata(result);
+bool _successOrNodata(dynamic result) =>
+    sqlSucceeded(result) || _nodata(result);
 
-bool _successOrNeeddata(int result) => sqlSucceeded(result) || _needdata(result);
+bool _successOrNeeddata(dynamic result) =>
+    sqlSucceeded(result) || _needdata(result);
